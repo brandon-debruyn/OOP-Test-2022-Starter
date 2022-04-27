@@ -84,11 +84,10 @@ public class NematodeVisualiser extends PApplet
 		}
 	}
 
-
 	public void displayNematodes() {
 		background(0);
 		float halfW = width / 2;
-		float boundary = 0.15f * width;
+		float boundary = 0.10f * width;
 		
 
 		float c = map(choice, 1, nematodes.size(), 0, 255);
@@ -114,12 +113,16 @@ public class NematodeVisualiser extends PApplet
 		line(width * 0.75f + arrowLength , height * 0.45f, width * 0.70f + arrowLength, height * 0.40f);
 		line(width * 0.75f + arrowLength , height * 0.45f, width * 0.70f + arrowLength, height * 0.50f);
 
+		// cool colour changes 
+		stroke(frameCount % 255, 255, 255);
+		strokeWeight(4);
+
+
 		// draw body
 		for(int i=0; i<nematodes.get(choice).getLength(); i++) {
 			
 			ellipse(halfW, (2 * boundary) + ((i) * radius) , radius, radius);
 			
-			stroke(c, 255, 255);
 			if(nematodes.get(choice).isLimbs()) {
 				line(halfW + radius / 2, (2 * boundary) + ((i) * radius), halfW  + radius + limbLength, (2 * boundary) + ((i) * radius));
 				line(halfW - radius / 2, (2 * boundary) + ((i) * radius), halfW - radius - limbLength, (2 * boundary) + ((i) * radius));
