@@ -11,13 +11,31 @@ import processing.data.TableRow;
 public class NematodeVisualiser extends PApplet
 {
 
+	int choice = 0;
+	float radius = 75.0f;
+	float limbLength = 5.0f;
+	float eyeSize = 13;
+	int arrowLength = 50;
+	
+	float arrowRightX = width * 0.75f;
+	float arrowRightY = height * 0.45f;
+
+	float arrowLeftX = width * 0.25f;
+	float arrowleftY = height * 0.45f;
+
 	ArrayList<Nematode> nematodes = new ArrayList<Nematode>();
 
 	public void keyPressed()
 	{		
-		if (keyCode == LEFT)
-		{
+		choice = Math.abs(choice);
+
+		if (keyCode == LEFT) {
+			choice -= 1;
 		}		
+		
+		if(keyCode == RIGHT) {
+			choice += 1;
+		}
 	}
 
 
@@ -37,6 +55,7 @@ public class NematodeVisualiser extends PApplet
 		for( Nematode n:nematodes) {
 			System.out.println(n);
 		}
+
 	}
 	
 
@@ -49,10 +68,7 @@ public class NematodeVisualiser extends PApplet
 		}
 	}
 
-	int choice = 0;
-	float radius = 75.0f;
-	float limbLength = 5.0f;
-	float eyeSize = 13;
+	
 
 	public void displayNematodes() {
 		background(0);
@@ -62,14 +78,30 @@ public class NematodeVisualiser extends PApplet
 
 		float c = map(choice, 1, nematodes.size(), 0, 255);
 		
+		// draw name
 		fill(c, 255, 255);
 		textSize(35);
 		textAlign(CENTER, LEFT);
 		text(nematodes.get(choice).getNematodeName(), halfW, boundary);
 
+		// draw arrows
 		stroke(c, 255, 255);
 		strokeWeight(4);
 		noFill();
+
+		// --- left arrow
+		line(width * 0.25f - arrowLength, height * 0.45f, width * 0.30f - arrowLength, height * 0.40f);
+		line(width * 0.25f - arrowLength , height * 0.45f, width * 0.25f + arrowLength, height * 0.45f);
+		line(width * 0.25f - arrowLength, height * 0.45f, width * 0.30f - arrowLength, height * 0.50f);
+
+		// --- right arrow
+		line(width * 0.75f - arrowLength , height * 0.45f, width * 0.75f + arrowLength, height * 0.45f);
+		line(width * 0.75f + arrowLength , height * 0.45f, width * 0.70f + arrowLength, height * 0.40f);
+		line(width * 0.75f + arrowLength , height * 0.45f, width * 0.70f + arrowLength, height * 0.50f);
+
+
+		// draw body
+		
 		for(int i=0; i<nematodes.get(choice).getLength(); i++) {
 			
 			ellipse(halfW, (2 * boundary) + ((i) * radius) , radius, radius);
@@ -82,6 +114,7 @@ public class NematodeVisualiser extends PApplet
 
 		}
 
+		// draw eyes
 		if(nematodes.get(choice).isEyes()) {
 
 			noFill();
@@ -98,6 +131,8 @@ public class NematodeVisualiser extends PApplet
 
 
 		}
+
+		// draw gender
 		int nematodeL = nematodes.get(choice).getLength();
 		char genderL = nematodes.get(choice).getGender().charAt(0);
 
@@ -109,11 +144,13 @@ public class NematodeVisualiser extends PApplet
 		}
 		// is drawn with a circle in the bottom segment
 		else if(genderL == 'f') {
-			
+			circle(halfW, (2 * boundary) + ((nematodeL - 1) * radius), 0.50f * radius);
 		}
 		// mix
 		else if(genderL == 'h') {
-			line(halfW, (2 * boundary) + (nematodes.get(choice).getLength() * radius), halfW, (2 * boundary) + (nematodes.get(choice).getLength() * radius) + radius + limbLength);
+			line(halfW, (2 * boundary) + ((nematodeL - 1) * radius) + radius / 2, halfW, (2 * boundary) + ((nematodeL) * radius) + limbLength);
+			circle(halfW, (2 * boundary) + ((nematodeL) * radius) + limbLength + eyeSize / 2, eyeSize);
+			circle(halfW, (2 * boundary) + ((nematodeL - 1) * radius), 0.50f * radius);
 		}
 		
 			
