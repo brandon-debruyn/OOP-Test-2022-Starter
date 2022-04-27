@@ -77,7 +77,7 @@ public class NematodeVisualiser extends PApplet
 		}
 	}
 
-	// my cool function
+	// my cool function - auto cycle through nematodes
 	public void autoCycle() {
 		if(frameCount % 120 == 0) {
 			choice += 1;
