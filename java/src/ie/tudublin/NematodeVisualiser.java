@@ -11,7 +11,7 @@ import processing.data.TableRow;
 public class NematodeVisualiser extends PApplet
 {
 
-	int choice = 0;
+	int choice = 5;
 	float radius = 75.0f;
 	float limbLength = 5.0f;
 	float eyeSize = 13;
@@ -27,14 +27,23 @@ public class NematodeVisualiser extends PApplet
 
 	public void keyPressed()
 	{		
-		choice = Math.abs(choice);
-
-		if (keyCode == LEFT) {
-			choice -= 1;
-		}		
 		
+		if (keyCode == LEFT) {
+			if(choice <= 0) {
+				choice = nematodes.size() - 1;
+			}
+			else {
+				choice -= 1;
+			}
+		}		
 		if(keyCode == RIGHT) {
-			choice += 1;
+			if(choice >= nematodes.size() - 1) {
+				choice = 0;
+			}
+			else {
+				choice += 1;
+			}
+			
 		}
 	}
 
