@@ -16,6 +16,8 @@ public class NematodeVisualiser extends PApplet
 	float limbLength = 5.0f;
 	float eyeSize = 13;
 	int arrowLength = 50;
+
+	boolean doAutoCycle = true;
 	
 	float arrowRightX = width * 0.75f;
 	float arrowRightY = height * 0.45f;
@@ -29,6 +31,7 @@ public class NematodeVisualiser extends PApplet
 	{		
 		
 		if (keyCode == LEFT) {
+			doAutoCycle = false;
 			if(choice <= 0) {
 				choice = nematodes.size() - 1;
 			}
@@ -37,6 +40,7 @@ public class NematodeVisualiser extends PApplet
 			}
 		}		
 		if(keyCode == RIGHT) {
+			doAutoCycle = false;
 			if(choice >= nematodes.size() - 1) {
 				choice = 0;
 			}
@@ -78,9 +82,9 @@ public class NematodeVisualiser extends PApplet
 	}
 
 	// my cool function - auto cycle through nematodes
-	public void autoCycle() {
-		if(frameCount % 120 == 0) {
-			choice += 1;
+	public void autoCycle(boolean doAutoCycle) {
+		if(doAutoCycle && frameCount % 120 == 0) {
+				choice += 1;
 		}
 	}
 
@@ -172,6 +176,6 @@ public class NematodeVisualiser extends PApplet
 	public void draw() {
 		background(0);
 		displayNematodes();
-		autoCycle();
+		autoCycle(doAutoCycle);
 	}
 }
